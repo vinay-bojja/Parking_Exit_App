@@ -1,0 +1,27 @@
+<html>
+<time><head>Payment Page</head></time>
+<body>
+	<div id="useme"></div>
+	<br><br><br>Scan Below QR using your UPI app to pay<br><br>
+	<div id="qrcode"></div>
+	<script type="text/javascript" src="qrcode.js"></script>
+    <script type="text/javascript" src="html5-qrcode.js"></script>
+<script type="text/javascript">
+    var url = window.location.href;
+    args=url.split("?")[1];
+    args=args.split("&");
+	document.getElementById("useme").innerHTML="Total time spent in Infrastructure = "+args[0].split("=")[1]+" minutes"+"<br>Total Fare for your Visit : ₹ "+args[1].split("=")[1] ;
+</script>
+<script>
+	var text="upi://pay?pa=vinay.bojja321@oksbi&pn=vinay bojja&am="+args[1].split("=")[1]+"&aid=uGICAgIC1ybzpPw"
+		var element = document.getElementById("qrcode");
+		element.appendChild(showQRCode(text));</script>
+<!--<img src="myupiqr.png"  alt="UPI QR" style="width:500px;height:600px";">-->
+
+<br>
+<input type="submit" value="PAID" 
+    onclick="window.location='qrscanner.html';" />  
+
+
+</body>
+</html>

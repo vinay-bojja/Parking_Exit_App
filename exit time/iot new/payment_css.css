@@ -1,0 +1,28 @@
+body
+{
+	margin-top: 10px;
+    width: 60%;
+    min-width: 200px;
+	background-color: #b3e0ff;
+	margin:0 auto;
+}
+
+.content {
+	max-width: 500px;
+	margin: 0 auto;
+	text-align: center;
+}
+h1
+{
+	text-shadow: 2px 2px 2px white;
+	font-weight: bold;
+}
+#useme
+{
+	font-size: 20px;
+	margin: 10px 0;
+}
+i
+{
+	font-size : 30px;
+}

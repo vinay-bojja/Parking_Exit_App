@@ -1,0 +1,43 @@
+<html>
+<head>
+  <title>Payment Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="payment_css.css">
+</head>
+<body>
+<div class="content">
+	<h1>PAY USING UPI APP</h1>
+	<div id="useme"></div>
+	   
+	<h2>SCAN QR FOR PAYMENT</h2>
+	<div><i class="fas fa-arrow-down arrow"></i><div>
+	<div id="qrcode"></div>
+	<h4>vinay.bojja321@oksbi</h4>
+	
+	<!--p><b>vinay bojja</b></br>
+	   vinay.bojja321@gmail.com</br>
+	   +918983356885</p-->
+	   
+	<script type="text/javascript" src="qrcode.js"></script>
+    <script type="text/javascript" src="html5-qrcode.js"></script>
+<script type="text/javascript">
+    var url = window.location.href;
+    args=url.split("?")[1];
+    args=args.split("&");
+	document.getElementById("useme").innerHTML="Total time spent in Infrastructure : &emsp;"+args[0].split("=")[1]+" minutes"+"<br>Total Fare for your Visit : &emsp;&emsp;₹ "+args[1].split("=")[1] ;
+</script>
+<script>
+	var text="upi://pay?pa=vinay.bojja321@oksbi&pn=vinay bojja&am="+args[1].split("=")[1]+"&aid=uGICAgIC1ybzpPw"
+		var element = document.getElementById("qrcode");
+		element.appendChild(showQRCode(text));
+</script>
+<!--<img src="myupiqr.png"  alt="UPI QR" style="width:500px;height:600px";">-->
+
+<br>
+<input type="submit" value="PAID" class="btn btn-success"
+    onclick="window.location='go.html';" />  
+
+</div>
+</body>
+</html>

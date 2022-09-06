@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Automated Parking System</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="qrscanner.css">
+</head>
+<body>
+  
+    <h1>SCAN YOUR RECEIPT'S QR CODE</h1>
+	<div><i class="fas fa-arrow-down arrow"></i></div>
+    <video id="preview"></video>
+
+    <script type="text/javascript">
+    var getJSON = function(url, callback) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', url, true);
+      xhr.responseType = 'json';
+      xhr.onload = function() {
+      var status = xhr.status;
+      if (status === 200) {
+        callback(null, xhr.response);
+      } else {
+        callback(status, xhr.response);
+      }
+      };
+      xhr.send();
+    };
+
+    function cost_calc(content){
+     var total_fare;
+     var total_time_minutes;
+     var pos = content.indexOf("_");
+     var content= content.slice(0, pos)
+
+    getJSON('https://api.thingspeak.com/channels/719291/fields/1.json?api_key=4H1VYZJ7FS6PT0DH&results=4',
+  function(err, data) {
+    if (err !== null) {
+      alert('Something went wrong: ' + err);
+    } else {
+     for( i=0 ; i<4 ; i++){
+       if(data.feeds[i].field1.split("_")[1]==content){
+        var vehentrytime=new Date(data.feeds[i].created_at)
+        var today = new Date();
+        total_time_minutes=((today-vehentrytime)/1000)/60;
+        if(total_time_minutes<2)
+          total_fare=10;
+        else if (total_time_minutes<5)
+          total_fare=20;
+        else if(total_time_minutes<10)
+          total_fare=30;
+        else
+          total_fare=50;
+        console.log('total time : '+total_time_minutes +' and total_fare : '+total_fare)
+        window.location = 'payment.html?time='+Math.ceil(total_time_minutes)+'&fare='+total_fare;
+        break;
+      }
+
+    }
+    }
+    });
+    
+  
+
+
+    
+
+    }
+    </script>
+    <script type="text/javascript">
+      let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+      scanner.addListener('scan', function (content) {
+		 cost_calc(content);
+      });
+
+      Instascan.Camera.getCameras().then(function (cameras) {
+        if (cameras.length > 0) {
+          scanner.start(cameras[0]);
+        } else {
+          console.error('No cameras found.');
+        }
+      }).catch(function (e) {
+        console.error(e);
+      });
+    </script>
+   
+</body>
+</html>
